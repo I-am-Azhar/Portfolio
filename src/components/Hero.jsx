@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
-import { SiNextdotjs, SiTailwindcss, SiTypescript, SiNodedotjs, SiFigma, SiReact } from 'react-icons/si';
+import { SiNextdotjs, SiReact, SiNodedotjs, SiCanva } from 'react-icons/si';
+import { DiIllustrator, DiPhotoshop } from 'react-icons/di';
 
 const EMAIL = 'iamazhar0807@gmail.com';
 const EMAIL_SUBJECT = 'Portfolio Inquiry';
@@ -29,12 +30,77 @@ const GlassIcon = ({ Icon, imgSrc, initialX, initialY, delay, color, className, 
 };
 
 const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, startAnimation = true }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const variants = {
+        hidden: {
+            opacity: 0,
+            x: zx,
+            y: zy + 50,
+            scale: 0.9,
+            rotate: rotate
+        },
+        floating: {
+            opacity: 1,
+            x: zx,
+            y: [zy - 5, zy + 5, zy - 5], // Gentle float
+            rotate: rotate,
+            scale: 1,
+            transition: {
+                y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                opacity: { duration: 0.5 }
+            }
+        },
+        open: {
+            opacity: 1,
+            x: zx,
+            y: zy,
+            scale: 1.1,
+            rotate: rotate,
+            transition: { type: "spring", stiffness: 300, damping: 20 }
+        }
+    };
+
+    const titleVariants = {
+        closed: {
+            top: "50%",
+            left: "50%",
+            x: "-50%",
+            y: "-50%",
+            scale: 2.0,
+            opacity: 1,
+            transition: { type: "spring", stiffness: 300, damping: 20 }
+        },
+        open: {
+            top: "1rem", // p-4 = 1rem
+            left: "1rem",
+            x: "0%",
+            y: "0%",
+            scale: 1,
+            opacity: 0.8,
+            transition: { type: "spring", stiffness: 300, damping: 20 }
+        }
+    };
+
+    // Pass isOpen state to children (GlassIcons)
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child, { startAnimation: isOpen });
+        }
+        return child;
+    });
+
     return (
         <motion.div
-            initial={{ opacity: 0, x: zx, y: zy + 50, scale: 0.9, rotate: rotate }}
-            animate={startAnimation ? { opacity: 1, x: zx, y: zy, scale: 1, rotate: rotate } : { opacity: 0, x: zx, y: zy + 50, scale: 0.9, rotate: rotate }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className={`${className}`}
+            initial="hidden"
+            animate={startAnimation ? (isOpen ? "open" : "floating") : "hidden"}
+            variants={variants}
+            onClick={() => setIsOpen(!isOpen)}
+            drag
+            dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`${className} cursor-grab active:cursor-grabbing`}
             style={{
                 filter: 'drop-shadow(0 15px 25px rgba(51, 51, 51, 0.25))'
             }}
@@ -44,9 +110,15 @@ const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, s
 
             {/* Folder Body */}
             <div className="relative z-10 w-full h-full bg-gradient-to-b from-gray-200/40 to-gray-200/10 backdrop-blur-xl rounded-b-2xl rounded-tr-2xl rounded-tl-none border border-black/10 p-4 flex flex-col">
-                <h3 className="text-xs md:text-sm font-semibold text-[#333333] mb-2 opacity-80 z-10 relative">{title}</h3>
-                <div className="relative w-full flex-1">
-                    {children}
+                <motion.h3
+                    variants={titleVariants}
+                    animate={isOpen ? "open" : "closed"}
+                    className="text-xs md:text-sm font-semibold text-[#333333] z-10 absolute pointer-events-none whitespace-nowrap"
+                >
+                    {title}
+                </motion.h3>
+                <div className="relative w-full flex-1 flex items-center justify-center mt-6"> {/* Added margin-top to avoid overlap when open */}
+                    {childrenWithProps}
                 </div>
             </div>
         </motion.div>
@@ -76,28 +148,24 @@ const Hero = ({ startAnimation = true }) => {
                 {/* Floating Icons - Glass Folder Layout */}
                 <div className="absolute inset-0 pointer-events-none max-w-[1400px] mx-auto z-0">
 
-                    {/* Left Cluster - Frontend */}
-                    <GlassFolder title="Frontend Stack" zx={0} zy={0} rotate={6} startAnimation={startAnimation} className="absolute bottom-4 left-4 md:bottom-8 md:left-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0">
-                        <div className="w-full h-full flex items-center justify-center">
-                            {/* React - Left Fan */}
-                            <GlassIcon Icon={SiReact} initialX={0} initialY={0} delay={0.2} color="text-[#61DAFB]" startAnimation={startAnimation} className="-rotate-12 z-0 -mr-6 relative" />
-                            {/* Next.js - Center Fan */}
-                            <GlassIcon Icon={SiNextdotjs} initialX={0} initialY={0} delay={0.4} color="text-black" startAnimation={startAnimation} className="z-10 scale-110 -mt-6 relative" />
-                            {/* TypeScript - Right Fan */}
-                            <GlassIcon Icon={SiTypescript} initialX={0} initialY={0} delay={0.6} color="text-[#3178C6]" startAnimation={startAnimation} className="rotate-12 z-0 -ml-6 relative" />
-                        </div>
+                    {/* Left Cluster - Web Dev */}
+                    <GlassFolder title="Web Dev" zx={0} zy={0} rotate={6} startAnimation={startAnimation} className="absolute bottom-4 left-4 md:bottom-8 md:left-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
+                        {/* Next.js - Left Fan */}
+                        <GlassIcon Icon={SiNextdotjs} initialX={0} initialY={0} delay={0.1} color="text-black" className="-rotate-12 z-0 -mr-6 relative" />
+                        {/* Node.js - Center Fan */}
+                        <GlassIcon Icon={SiNodedotjs} initialX={0} initialY={0} delay={0.2} color="text-[#339933]" className="z-10 scale-110 -mt-6 relative" />
+                        {/* React - Right Fan */}
+                        <GlassIcon Icon={SiReact} initialX={0} initialY={0} delay={0.3} color="text-[#61DAFB]" className="rotate-12 z-0 -ml-6 relative" />
                     </GlassFolder>
 
-                    {/* Right Cluster - Backend & Design */}
-                    <GlassFolder title="Backend & Design" zx={0} zy={0} rotate={-6} startAnimation={startAnimation} className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0">
-                        <div className="w-full h-full flex items-center justify-center">
-                            {/* Tailwind - Left Fan */}
-                            <GlassIcon Icon={SiTailwindcss} initialX={0} initialY={0} delay={0.8} color="text-[#06B6D4]" startAnimation={startAnimation} className="-rotate-12 z-0 -mr-6 relative" />
-                            {/* Node.js - Center Fan */}
-                            <GlassIcon Icon={SiNodedotjs} initialX={0} initialY={0} delay={1.0} color="text-[#339933]" startAnimation={startAnimation} className="z-10 scale-110 -mt-6 relative" />
-                            {/* Figma - Right Fan */}
-                            <GlassIcon Icon={SiFigma} initialX={0} initialY={0} delay={1.2} color="text-[#F24E1E]" startAnimation={startAnimation} className="rotate-12 z-0 -ml-6 relative" />
-                        </div>
+                    {/* Right Cluster - Design */}
+                    <GlassFolder title="Design" zx={0} zy={0} rotate={-6} startAnimation={startAnimation} className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
+                        {/* Canva - Left Fan */}
+                        <GlassIcon Icon={SiCanva} initialX={0} initialY={0} delay={0.1} color="text-[#00C4CC]" className="-rotate-12 z-0 -mr-6 relative" />
+                        {/* Illustrator - Center Fan */}
+                        <GlassIcon Icon={DiIllustrator} initialX={0} initialY={0} delay={0.2} color="text-[#FF9A00]" className="z-10 scale-110 -mt-6 relative" />
+                        {/* Photoshop - Right Fan */}
+                        <GlassIcon Icon={DiPhotoshop} initialX={0} initialY={0} delay={0.3} color="text-[#31A8FF]" className="rotate-12 z-0 -ml-6 relative" />
                     </GlassFolder>
 
                 </div>

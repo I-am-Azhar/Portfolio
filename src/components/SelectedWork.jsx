@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import BackgroundGrid from './BackgroundGrid';
+
 
 const SelectedWork = () => {
     const rightSectionRef = useRef(null);
     const containerRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [isInView, setIsInView] = useState(false);
+
+    const { scrollYProgress } = useScroll({
+        container: rightSectionRef,
+        offset: ['start start', 'end end']
+    });
 
     const projects = [
         {
@@ -16,7 +21,7 @@ const SelectedWork = () => {
             year: '2024',
             tags: ['REACT', 'FRONTEND', 'ANIMATIONS'],
             image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop',
-            bgColor: 'transparent',
+            bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
             liveUrl: 'https://digitalpa.vercel.app/',
@@ -28,7 +33,7 @@ const SelectedWork = () => {
             year: '2024',
             tags: ['REACT', 'CANVAS API', 'PARALLAX'],
             image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&h=800&fit=crop',
-            bgColor: 'transparent',
+            bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
             liveUrl: 'https://visas-vision.vercel.app/',
@@ -40,7 +45,7 @@ const SelectedWork = () => {
             year: '2024',
             tags: ['PYTHON', 'ARDUINO', 'COMPUTER VISION'],
             image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=800&fit=crop',
-            bgColor: 'transparent',
+            bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
             liveUrl: null,
@@ -99,10 +104,10 @@ const SelectedWork = () => {
                             <h1 className="text-6xl lg:text-8xl font-black text-[#333333] tracking-tighter">
                                 PROJECTS
                             </h1>
-                            <div className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#0f8490] to-transparent opacity-90"></div>
+                            <div className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#7b4214] to-transparent opacity-90"></div>
                         </div>
-                        <div className="lg:hidden bg-white px-10 py-3 rounded-full shadow-2xl pointer-events-auto">
-                            <h1 className="text-3xl font-black text-[#333333] tracking-wide">
+                        <div className="lg:hidden bg-[#333333] px-10 py-3 rounded-full shadow-2xl pointer-events-auto">
+                            <h1 className="text-3xl font-black text-[#fbf9ef] tracking-wide">
                                 PROJECTS
                             </h1>
                         </div>
@@ -114,7 +119,7 @@ const SelectedWork = () => {
             {/* Right Section - Scrollable */}
             <div
                 ref={rightSectionRef}
-                className="relative w-full lg:w-2/3 h-screen lg:h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+                className="relative w-full lg:w-2/3 h-screen lg:h-screen overflow-y-scroll scrollbar-hide"
             >
                 {/* Project Counter */}
                 <AnimatePresence>
@@ -135,108 +140,19 @@ const SelectedWork = () => {
                     )}
                 </AnimatePresence>
 
-                {projects.map((project, index) => (
-                    <div
-                        key={project.id}
-                        className="h-screen lg:h-screen w-full snap-start snap-always flex items-start lg:items-center justify-center p-4 pt-32 md:p-6 lg:p-12 relative overflow-hidden"
-                        style={{
-                            backgroundColor: project.bgColor,
-                            backgroundImage: project.bgPattern,
-                            backgroundSize: project.bgSize
-                        }}
-                    >
-                        <div className="absolute inset-0 z-0 opacity-30">
-                            <BackgroundGrid />
-                        </div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.7, delay: 0.2 }}
-                            className="w-full max-w-full lg:max-w-3xl relative z-10"
-                        >
-                            {/* Project Card */}
-                            <motion.div
-                                whileHover={{ scale: 1.01 }}
-                                transition={{ duration: 0.3 }}
-                                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-6 md:p-8 relative overflow-hidden"
-                            >
-
-
-                                {/* Project Image */}
-                                <motion.div
-                                    whileHover={{ scale: 1.02 }}
-                                    transition={{ duration: 0.4 }}
-                                    className="relative rounded-3xl overflow-hidden shadow-md mb-6 md:mb-8 aspect-[4/5] lg:aspect-[16/10] group"
-                                >
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        loading="lazy"
-                                    />
-                                    {/* Gradient Overlay on Hover */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-[#149Eaa]/0 to-[#0d7a87]/0 group-hover:from-[#149Eaa]/10 group-hover:to-[#0d7a87]/10 transition-all duration-500"></div>
-                                </motion.div>
-
-                                {/* Project Info */}
-                                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 md:gap-6">
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-4 mb-4">
-                                            <motion.h2
-                                                initial={{ opacity: 0, y: 20 }}
-                                                whileInView={{ opacity: 1, y: 0 }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: 0.3 }}
-                                                className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#333333] leading-tight"
-                                            >
-                                                {project.title}
-                                            </motion.h2>
-
-                                            {/* Live Link Button / Coming Soon Badge */}
-                                            {project.liveUrl ? (
-                                                <motion.a
-                                                    href={project.liveUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    whileHover={{ scale: 1.05, y: -2 }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                    className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#149Eaa] to-[#0d7a87] text-white rounded-full text-xs font-semibold shadow-md hover:shadow-lg transition-all duration-300"
-                                                >
-                                                    <span>View Live</span>
-                                                    <ExternalLink className="w-3 h-3" />
-                                                </motion.a>
-                                            ) : (
-                                                <motion.span
-                                                    initial={{ opacity: 0, scale: 0.9 }}
-                                                    animate={{ opacity: 1, scale: 1 }}
-                                                    className="px-3 py-1.5 bg-[#F5F2F4] text-gray-600 rounded-full text-xs font-semibold"
-                                                >
-                                                    Coming Soon
-                                                </motion.span>
-                                            )}
-                                        </div>
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.tags.map((tag, tagIndex) => (
-                                                <motion.span
-                                                    key={tagIndex}
-                                                    initial={{ opacity: 0, scale: 0.9 }}
-                                                    whileInView={{ opacity: 1, scale: 1 }}
-                                                    viewport={{ once: true }}
-                                                    transition={{ delay: 0.4 + tagIndex * 0.05 }}
-                                                    whileHover={{ scale: 1.05, y: -2 }}
-                                                    className="px-3 py-2 bg-[#F5F2F4] hover:bg-gray-100 rounded-full text-xs md:text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
-                                                >
-                                                    {tag}
-                                                </motion.span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    </div>
-                ))}
+                {projects.map((project, index) => {
+                    const targetScale = 1 - (projects.length - index) * 0.05;
+                    return (
+                        <Card
+                            key={project.id}
+                            i={index}
+                            project={project}
+                            progress={scrollYProgress}
+                            range={[index * 0.25, 1]}
+                            targetScale={targetScale}
+                        />
+                    );
+                })}
             </div>
 
             {/* Custom Scrollbar Styles */}
@@ -271,6 +187,108 @@ const SelectedWork = () => {
           }
         }
       `}</style>
+        </div>
+    );
+};
+
+
+const Card = ({ i, project, progress, range, targetScale }) => {
+    const scale = useTransform(progress, range, [1, targetScale]);
+
+    return (
+        <div className="h-screen w-full sticky top-0 flex items-center justify-center">
+            <motion.div
+                style={{ scale }}
+                className="w-full h-full flex items-center justify-center p-4 pt-32 md:p-6 lg:p-12 relative origin-top"
+            >
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="w-full max-w-full lg:max-w-3xl relative z-10"
+                >
+                    {/* Project Card */}
+                    <motion.div
+                        whileHover={{ scale: 1.01 }}
+                        transition={{ duration: 0.3 }}
+                        className="bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 md:p-8 relative overflow-hidden"
+                    >
+
+
+                        {/* Project Image */}
+                        <motion.div
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.4 }}
+                            className="relative rounded-3xl overflow-hidden shadow-md mb-6 md:mb-8 aspect-[4/5] lg:aspect-[16/10] group"
+                        >
+                            <img
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                loading="lazy"
+                            />
+                            {/* Gradient Overlay on Hover */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#7b4214]/0 to-[#7b4214]/0 group-hover:from-[#7b4214]/10 group-hover:to-[#7b4214]/10 transition-all duration-500"></div>
+                        </motion.div>
+
+                        {/* Project Info */}
+                        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 md:gap-6">
+                            <div className="flex-1">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <motion.h2
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: 0.3 }}
+                                        className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#333333] leading-tight"
+                                    >
+                                        {project.title}
+                                    </motion.h2>
+
+                                    {/* Live Link Button / Coming Soon Badge */}
+                                    {project.liveUrl ? (
+                                        <motion.a
+                                            href={project.liveUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            whileHover={{ scale: 1.05, y: -2 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#7b4214] to-[#7b4214] text-white rounded-full text-xs font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+                                        >
+                                            <span>View Live</span>
+                                            <ExternalLink className="w-3 h-3" />
+                                        </motion.a>
+                                    ) : (
+                                        <motion.span
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            className="px-3 py-1.5 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 text-gray-600 rounded-full text-xs font-semibold"
+                                        >
+                                            Coming Soon
+                                        </motion.span>
+                                    )}
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {project.tags.map((tag, tagIndex) => (
+                                        <motion.span
+                                            key={tagIndex}
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: 0.4 + tagIndex * 0.05 }}
+                                            whileHover={{ scale: 1.05, y: -2 }}
+                                            className="px-3 py-2 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 hover:bg-white/40 rounded-full text-xs md:text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
+                                        >
+                                            {tag}
+                                        </motion.span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            </motion.div>
         </div>
     );
 };
