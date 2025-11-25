@@ -96,13 +96,13 @@ const SelectedWork = () => {
                         className="lg:mb-12 w-full flex justify-center lg:block"
                     >
                         <div className="hidden lg:inline-block relative">
-                            <h1 className="text-6xl lg:text-8xl font-black text-black tracking-tighter">
+                            <h1 className="text-6xl lg:text-8xl font-black text-[#333333] tracking-tighter">
                                 PROJECTS
                             </h1>
                             <div className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#0f8490] to-transparent opacity-90"></div>
                         </div>
                         <div className="lg:hidden bg-white px-10 py-3 rounded-full shadow-2xl pointer-events-auto">
-                            <h1 className="text-3xl font-black text-black tracking-wide">
+                            <h1 className="text-3xl font-black text-[#333333] tracking-wide">
                                 PROJECTS
                             </h1>
                         </div>
@@ -126,7 +126,7 @@ const SelectedWork = () => {
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                             className="fixed bottom-6 right-6 lg:fixed lg:bottom-auto lg:top-1/2 lg:right-12 lg:-translate-y-1/2 flex lg:flex-col items-center gap-2 lg:gap-4 z-50 bg-white/90 px-3 py-1.5 lg:px-2 lg:py-1 rounded-full shadow-sm border border-gray-100 pointer-events-auto"
                         >
-                            <span className="text-xs lg:text-2xl font-bold text-black lg:text-black">
+                            <span className="text-xs lg:text-2xl font-bold text-[#333333] lg:text-[#333333]">
                                 {String(activeIndex + 1).padStart(2, '0')}
                             </span>
                             <div className="h-px w-8 bg-gray-300 lg:w-px lg:h-12 lg:bg-gray-300"></div>
@@ -188,7 +188,7 @@ const SelectedWork = () => {
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ delay: 0.3 }}
-                                                className="text-2xl md:text-3xl lg:text-4xl font-bold text-black leading-tight"
+                                                className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#333333] leading-tight"
                                             >
                                                 {project.title}
                                             </motion.h2>

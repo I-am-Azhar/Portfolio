@@ -11,7 +11,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="h-screen overflow-y-scroll snap-container bg-[#f9fafb] relative">
+    <div className="h-screen overflow-y-scroll snap-container bg-[#fbf9ef] relative">
       <AnimatePresence mode="wait">
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
       </AnimatePresence>

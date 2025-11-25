@@ -47,9 +47,9 @@ const MissionServices = () => {
                 { name: 'Python', icon: SiPython },
                 { name: 'C', icon: SiC }
             ],
-            iconBg: 'bg-teal-50',
-            iconColor: 'text-teal-600',
-            headingColor: 'text-teal-700'
+            iconBg: 'bg-[#ea580c]/10',
+            iconColor: 'text-[#ea580c]',
+            headingColor: 'text-[#9a3412]'
         },
         {
             id: 2,
@@ -135,9 +135,9 @@ const MissionServices = () => {
                 { name: 'JWT Auth', icon: SiJsonwebtokens },
                 { name: 'Zod', icon: SiZod }
             ],
-            iconBg: 'bg-teal-50',
-            iconColor: 'text-teal-600',
-            headingColor: 'text-teal-700'
+            iconBg: 'bg-[#ea580c]/10',
+            iconColor: 'text-[#ea580c]',
+            headingColor: 'text-[#9a3412]'
         }
     ];
 
@@ -158,7 +158,7 @@ const MissionServices = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-6 md:p-8 text-white overflow-hidden relative shrink-0 shadow-md"
+                    className="bg-[#333333] rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-6 md:p-8 text-[#fbf9ef] overflow-hidden relative shrink-0 shadow-md"
                 >
                     <div className="max-w-4xl">
                         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium leading-snug mb-2 sm:mb-4">
@@ -190,9 +190,9 @@ const MissionServices = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
-                        className="bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] rounded-2xl shadow-md p-8 flex items-center justify-center"
+                        className="bg-[#333333] rounded-2xl shadow-md p-8 flex items-center justify-center"
                     >
-                        <h2 className="text-3xl xl:text-4xl font-bold text-center leading-tight text-white">
+                        <h2 className="text-3xl xl:text-4xl font-bold text-center leading-tight text-[#fbf9ef]">
                             Skills &<br />Tech Stack
                         </h2>
                     </motion.div>
@@ -208,13 +208,13 @@ const MissionServices = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1, duration: 0.5 }}
                                 whileHover={{ scale: 1.02 }}
-                                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-6 flex flex-col gap-4"
+                                className="bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] flex items-center justify-center shrink-0">
-                                        <CategoryIcon className="w-6 h-6 text-white" />
+                                    <div className="w-12 h-12 rounded-full bg-[#333333] flex items-center justify-center shrink-0">
+                                        <CategoryIcon className="w-6 h-6 text-[#fbf9ef]" />
                                     </div>
-                                    <h3 className="text-lg font-semibold bg-gradient-to-r from-[#149Eaa] to-[#0d7a87] bg-clip-text text-transparent">
+                                    <h3 className="text-lg font-semibold text-[#333333]">
                                         {category.category}
                                     </h3>
                                 </div>
@@ -229,7 +229,7 @@ const MissionServices = () => {
                                                 viewport={{ once: true }}
                                                 transition={{ delay: 0.1 + skillIndex * 0.05 }}
                                                 whileHover={{ scale: 1.05, y: -2 }}
-                                                className="flex items-center gap-2 px-3 py-2 bg-[#F5F2F4] hover:bg-gray-100 rounded-full text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
+                                                className="flex items-center gap-2 px-2.5 py-1.5 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 hover:bg-white/40 rounded-full text-sm font-medium text-[#333333] transition-all duration-200 cursor-default shadow-sm hover:shadow"
                                             >
                                                 <SkillIcon className="w-4 h-4 shrink-0" />
                                                 <span>{skill.name}</span>
@@ -252,13 +252,13 @@ const MissionServices = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
                                 whileHover={{ scale: 1.02 }}
-                                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-6 flex flex-col gap-4"
+                                className="bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] flex items-center justify-center shrink-0">
-                                        <CategoryIcon className="w-6 h-6 text-white" />
+                                    <div className="w-12 h-12 rounded-full bg-[#333333] flex items-center justify-center shrink-0">
+                                        <CategoryIcon className="w-6 h-6 text-[#fbf9ef]" />
                                     </div>
-                                    <h3 className="text-lg font-semibold bg-gradient-to-r from-[#149Eaa] to-[#0d7a87] bg-clip-text text-transparent">
+                                    <h3 className="text-lg font-semibold text-[#333333]">
                                         {category.category}
                                     </h3>
                                 </div>
@@ -273,7 +273,7 @@ const MissionServices = () => {
                                                 viewport={{ once: true }}
                                                 transition={{ delay: 0.2 + skillIndex * 0.05 }}
                                                 whileHover={{ scale: 1.05, y: -2 }}
-                                                className="flex items-center gap-2 px-3 py-2 bg-[#F5F2F4] hover:bg-gray-100 rounded-full text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
+                                                className="flex items-center gap-2 px-2.5 py-1.5 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 hover:bg-white/40 rounded-full text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
                                             >
                                                 <SkillIcon className="w-4 h-4 shrink-0" />
                                                 <span>{skill.name}</span>
@@ -296,13 +296,13 @@ const MissionServices = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
                                 whileHover={{ scale: 1.02 }}
-                                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-6 flex flex-col gap-4"
+                                className="bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] flex items-center justify-center shrink-0">
-                                        <CategoryIcon className="w-6 h-6 text-white" />
+                                    <div className="w-12 h-12 rounded-full bg-[#333333] flex items-center justify-center shrink-0">
+                                        <CategoryIcon className="w-6 h-6 text-[#fbf9ef]" />
                                     </div>
-                                    <h3 className="text-lg font-semibold bg-gradient-to-r from-[#149Eaa] to-[#0d7a87] bg-clip-text text-transparent">
+                                    <h3 className="text-lg font-semibold text-[#333333]">
                                         {category.category}
                                     </h3>
                                 </div>
@@ -317,7 +317,7 @@ const MissionServices = () => {
                                                 viewport={{ once: true }}
                                                 transition={{ delay: 0.3 + index * 0.1 + skillIndex * 0.05 }}
                                                 whileHover={{ scale: 1.05, y: -2 }}
-                                                className="flex items-center gap-2 px-3 py-2 bg-[#F5F2F4] hover:bg-gray-100 rounded-full text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
+                                                className="flex items-center gap-2 px-2.5 py-1.5 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 hover:bg-white/40 rounded-full text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
                                             >
                                                 <SkillIcon className="w-4 h-4 shrink-0" />
                                                 <span>{skill.name}</span>
@@ -338,9 +338,9 @@ const MissionServices = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
-                        className="bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] rounded-xl sm:rounded-2xl shadow-md p-4 sm:p-5 flex items-center justify-center"
+                        className="bg-[#333333] rounded-xl sm:rounded-2xl shadow-md p-4 sm:p-5 flex items-center justify-center"
                     >
-                        <h2 className="text-xl sm:text-2xl font-bold text-center leading-tight text-white">
+                        <h2 className="text-xl sm:text-2xl font-bold text-center leading-tight text-[#fbf9ef]">
                             Skills &<br />Tech Stack
                         </h2>
                     </motion.div>
@@ -357,13 +357,13 @@ const MissionServices = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1, duration: 0.5 }}
                                 whileHover={{ scale: 1.02 }}
-                                className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-3 sm:p-4 flex flex-col gap-2.5 sm:gap-3"
+                                className="bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-3 sm:p-4 flex flex-col gap-2.5 sm:gap-3"
                             >
                                 <div className="flex items-center gap-2 mb-2">
-                                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#149Eaa] to-[#0d7a87] flex items-center justify-center shrink-0">
-                                        <CategoryIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#333333] flex items-center justify-center shrink-0">
+                                        <CategoryIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#fbf9ef]" />
                                     </div>
-                                    <h3 className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-[#149Eaa] to-[#0d7a87] bg-clip-text text-transparent">
+                                    <h3 className="text-xs sm:text-sm font-semibold text-[#333333]">
                                         {category.category}
                                     </h3>
                                 </div>
@@ -378,7 +378,7 @@ const MissionServices = () => {
                                                 viewport={{ once: true }}
                                                 transition={{ delay: index * 0.1 + skillIndex * 0.05 }}
                                                 whileHover={{ scale: 1.05, y: -2 }}
-                                                className="flex items-center gap-1.5 px-2 py-1.5 bg-[#F5F2F4] hover:bg-gray-100 rounded-full text-xs font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
+                                                className="flex items-center gap-1.5 px-1.5 py-1 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 hover:bg-white/40 rounded-full text-xs font-medium text-[#333333] transition-all duration-200 cursor-default shadow-sm hover:shadow"
                                             >
                                                 <SkillIcon className="w-3 h-3 shrink-0" />
                                                 <span>{skill.name}</span>

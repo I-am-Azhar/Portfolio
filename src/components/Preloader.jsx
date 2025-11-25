@@ -22,7 +22,7 @@ const Preloader = ({ onComplete }) => {
             }}
             initial="initial"
             exit="exit"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#141516]"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#333333]"
         >
             <div className="overflow-hidden flex">
                 {"Welcome.".split('').map((char, index) => (
@@ -36,7 +36,7 @@ const Preloader = ({ onComplete }) => {
                             ease: [0.76, 0, 0.24, 1],
                             delay: index * 0.05
                         }}
-                        className="text-white text-[20vw] md:text-[20vw] font-['Anton'] tracking-wide inline-block leading-none"
+                        className="text-[#fbf9ef] text-[20vw] md:text-[20vw] font-['Anton'] tracking-wide inline-block leading-none"
                     >
                         {char}
                     </motion.span>
