@@ -4,8 +4,7 @@ import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { SiNextdotjs, SiReact, SiNodedotjs, SiCanva } from 'react-icons/si';
 import { DiIllustrator, DiPhotoshop } from 'react-icons/di';
 
-const EMAIL = 'iamazhar0807@gmail.com';
-const EMAIL_SUBJECT = 'Portfolio Inquiry';
+const PHONE_NUMBER = '+919908405786';
 
 const GlassIcon = ({ Icon, imgSrc, initialX, initialY, delay, color, className, startAnimation = true }) => {
     return (
@@ -18,12 +17,12 @@ const GlassIcon = ({ Icon, imgSrc, initialX, initialY, delay, color, className, 
                 damping: 20,
                 delay: delay
             }}
-            className={`flex items-center justify-center w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl bg-[#fbf9ef] shadow-lg border border-gray-100 ${className}`}
+            className={`flex items-center justify-center ${startAnimation ? 'w-10 h-10' : 'w-8 h-8'} md:w-12 md:h-12 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl bg-[#fbf9ef] shadow-lg border border-gray-100 ${className}`}
         >
             {imgSrc ? (
                 <img src={imgSrc} alt="Icon" className="w-3/4 h-3/4 object-contain" />
             ) : (
-                <Icon className={`text-xl md:text-2xl lg:text-4xl ${color}`} />
+                <Icon className={`${startAnimation ? 'text-3xl' : 'text-xl'} md:text-2xl lg:text-4xl ${color}`} />
             )}
         </motion.div>
     );
@@ -105,7 +104,7 @@ const FakeCursor = ({ startAnimation = true, targetFolder = "left", isAnyFolderO
             }}
             className={`absolute pointer-events-none z-50 ${isRight
                 ? "bottom-32 right-8 md:bottom-40 md:right-16 lg:bottom-48 lg:right-16"
-                : "bottom-32 left-8 md:bottom-40 md:left-16 lg:bottom-35 lg:left-55"
+                : "bottom-32 left-36 md:bottom-40 md:left-16 lg:bottom-35 lg:left-55"
                 }`}
             style={{ width: '32px', height: '32px' }}
         >
@@ -140,7 +139,7 @@ const FakeCursor = ({ startAnimation = true, targetFolder = "left", isAnyFolderO
                     repeat: Infinity,
                     repeatDelay: 2
                 }}
-                className="absolute top-0 left-0 w-8 h-8 rounded-full border-2 border-[#008F96]"
+                className="absolute top-0 left-0 w-8 h-8 rounded-full border-2 border-[#333333]"
             />
 
             {/* "Click me" text - Positioned based on side */}
@@ -148,7 +147,7 @@ const FakeCursor = ({ startAnimation = true, targetFolder = "left", isAnyFolderO
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isAnyFolderOpen ? 0 : 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className={`absolute -top-6 ${isRight ? 'right-6' : 'left-6'} bg-[#333333] text-white px-2 py-1 rounded text-xs font-medium whitespace-nowrap shadow-lg`}
+                className={`absolute -top-6 ${isRight ? 'right-6' : 'left-6'} bg-[#333333] text-[#fbf9ef] px-2 py-1 rounded text-xs font-medium whitespace-nowrap shadow-lg`}
             >
                 {displayText}<span className="animate-pulse">|</span>
             </motion.div>
@@ -264,7 +263,7 @@ const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, s
 };
 
 const Hero = ({ startAnimation = true }) => {
-    const emailLink = `mailto:${EMAIL}?subject=${encodeURIComponent(EMAIL_SUBJECT)}`;
+    const phoneLink = `tel:${PHONE_NUMBER}`;
     const [isAnyFolderOpen, setIsAnyFolderOpen] = useState(false);
 
     const handleFolderOpenChange = (isOpen) => {
@@ -272,7 +271,7 @@ const Hero = ({ startAnimation = true }) => {
     };
 
     return (
-        <div className="min-h-screen bg-transparent relative text-gray-900 font-sans selection:bg-gray-200 flex flex-col overflow-hidden snap-section">
+        <div className="h-[100dvh] bg-transparent relative text-gray-900 font-sans selection:bg-gray-200 flex flex-col overflow-hidden snap-section">
             {/* Skip to content link for accessibility */}
             <a
                 href="#main-content"
@@ -295,37 +294,17 @@ const Hero = ({ startAnimation = true }) => {
                     <FakeCursor startAnimation={startAnimation} targetFolder="left" isAnyFolderOpen={isAnyFolderOpen} />
 
                     {/* Left Cluster - Web Dev */}
-                    <GlassFolder title="Web Dev" zx={0} zy={0} rotate={6} startAnimation={startAnimation} onOpenChange={handleFolderOpenChange} className="absolute bottom-4 left-4 md:bottom-8 md:left-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
+                    <GlassFolder title="Web Dev" zx={0} zy={0} rotate={6} startAnimation={startAnimation} onOpenChange={handleFolderOpenChange} className="absolute bottom-16 left-4 md:bottom-8 md:left-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
                         {/* Next.js - Left Fan */}
-                        <GlassIcon Icon={SiNextdotjs} initialX={0} initialY={0} delay={0.1} color="text-black" className="-rotate-12 z-0 -mr-6 relative" />
+                        <GlassIcon Icon={SiNextdotjs} initialX={0} initialY={0} delay={0.1} color="text-black" className="-rotate-12 z-0 -mr-3 md:-mr-6 relative" />
                         {/* Node.js - Center Fan */}
-                        <GlassIcon Icon={SiNodedotjs} initialX={0} initialY={0} delay={0.2} color="text-[#339933]" className="z-10 scale-110 -mt-6 relative" />
+                        <GlassIcon Icon={SiNodedotjs} initialX={0} initialY={0} delay={0.2} color="text-[#339933]" className="z-10 scale-110 -mt-3 md:-mt-6 relative" />
                         {/* React - Right Fan */}
-                        <GlassIcon Icon={SiReact} initialX={0} initialY={0} delay={0.3} color="text-[#61DAFB]" className="rotate-12 z-0 -ml-6 relative" />
-                    </GlassFolder>
-
-                    {/* Right Cluster - Design */}
-                    <GlassFolder title="Design" zx={0} zy={0} rotate={-6} startAnimation={startAnimation} onOpenChange={handleFolderOpenChange} className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
-                        {/* Canva - Left Fan */}
-                        <GlassIcon Icon={SiCanva} initialX={0} initialY={0} delay={0.1} color="text-[#00C4CC]" className="-rotate-12 z-0 -mr-6 relative" />
-                        {/* Illustrator - Center Fan */}
-                        <GlassIcon Icon={DiIllustrator} initialX={0} initialY={0} delay={0.2} color="text-[#FF9A00]" className="z-10 scale-110 -mt-6 relative" />
-                        {/* Photoshop - Right Fan */}
-                        <GlassIcon Icon={DiPhotoshop} initialX={0} initialY={0} delay={0.3} color="text-[#31A8FF]" className="rotate-12 z-0 -ml-6 relative" />
+                        <GlassIcon Icon={SiReact} initialX={0} initialY={0} delay={0.3} color="text-[#61DAFB]" className="rotate-12 z-0 -ml-3 md:-ml-6 relative" />
                     </GlassFolder>
 
                 </div>
 
-                {/* Available for work badge */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={startAnimation ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute top-4 left-6 inline-flex items-center gap-2 bg-[#E6F7F8] px-3 py-1.5 rounded-full z-30"
-                >
-                    <span className="w-1.5 h-1.5 bg-[#008F96] rounded-full"></span>
-                    <span className="text-[#008F96] text-xs font-bold tracking-widest uppercase">AVAILABLE FOR WORK</span>
-                </motion.div>
 
                 {/* Main Typography */}
                 <div className="flex flex-col items-center leading-none mb-12 relative z-30">
@@ -335,7 +314,7 @@ const Hero = ({ startAnimation = true }) => {
                         transition={{ duration: 0.5 }}
                         className="mb-6 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 px-6 py-2 rounded-full shadow-sm"
                     >
-                        <span className="text-[#333333] font-medium text-sm sm:text-base tracking-wide">Hi, My Name is Mohammad Azhar and I'am a</span>
+                        <span className="text-[#333333] font-medium text-xs sm:text-base tracking-wide">Hi, My Name is Mohammad Azhar and I'am a</span>
                     </motion.div>
 
                     <div className="overflow-hidden px-4 pb-2">
@@ -360,10 +339,10 @@ const Hero = ({ startAnimation = true }) => {
 
                     <div className="relative overflow-hidden px-4 pb-2">
                         <h1
-                            className="font-['Anton'] text-[18vw] sm:text-[15vw] lg:text-[14vw] tracking-tighter text-transparent uppercase leading-[0.9] whitespace-nowrap flex justify-center"
+                            className="font-['Anton'] text-[16vw] sm:text-[12vw] lg:text-[12vw] tracking-tighter text-transparent uppercase leading-[0.9] whitespace-nowrap flex justify-center"
                             style={{ WebkitTextStroke: '2px #333333' }}
                         >
-                            {"& DESIGNER".split('').map((char, index) => (
+                            {"& FREELANCER".split('').map((char, index) => (
                                 <motion.span
                                     key={index}
                                     initial={{ y: "100%" }}
@@ -386,22 +365,22 @@ const Hero = ({ startAnimation = true }) => {
                 {/* CTA Buttons */}
                 <div className="flex flex-row justify-center gap-4 w-full sm:w-auto px-4 items-center relative z-30">
                     <motion.a
-                        href={emailLink}
+                        href={phoneLink}
                         initial={{ opacity: 0, y: 20 }}
                         animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
-                        className="bg-[#333333] text-white px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-full font-medium hover:bg-black transition-all duration-300 cursor-pointer w-auto text-center min-w-[140px] sm:min-w-[200px]"
-                        aria-label="Contact me via email"
+                        className="bg-[#333333] text-[#fbf9ef] border-2 border-[#333333] px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-full font-medium hover:bg-[#fbf9ef] hover:text-[#333333] hover:border-[#333333] transition-all duration-300 cursor-pointer w-auto text-center min-w-[140px] sm:min-w-[200px]"
+                        aria-label="Call me at +91 9908405786"
                     >
                         Contact Me
                     </motion.a>
                     <motion.a
                         href="/Azhar_resume_November.pdf"
-                        download
+                        download="Azhar_Resume.pdf"
                         initial={{ opacity: 0, y: 20 }}
                         animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.5, delay: 0.5 }}
-                        className="bg-transparent text-[#333333] border-2 border-[#333333] px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-full font-medium hover:bg-gray-50 transition-all duration-300 cursor-pointer w-auto flex items-center justify-center gap-2 min-w-[140px] sm:min-w-[200px]"
+                        className="bg-transparent text-[#333333] border-2 border-[#333333] px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-full font-medium hover:bg-[#333333] hover:text-[#fbf9ef] transition-all duration-300 cursor-pointer w-auto flex items-center justify-center gap-2 min-w-[140px] sm:min-w-[200px]"
                         aria-label="Download resume PDF"
                     >
                         <FiDownload size={20} aria-hidden="true" />
@@ -409,7 +388,45 @@ const Hero = ({ startAnimation = true }) => {
                     </motion.a>
                 </div>
 
+
+
             </main >
+            {/* Available to work Stripe */}
+            {/* Available to work Stripe - Desktop */}
+            <motion.div
+                initial={{ clipPath: "inset(0 100% 0 0)" }}
+                animate={startAnimation ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
+                transition={{ duration: 2.0, delay: 1.5, ease: "easeInOut" }}
+                className="hidden md:block absolute bottom-[90px] -right-[550px] w-[1500px] bg-[#333333] text-[#fbf9ef] text-center py-5 -rotate-45 z-40 shadow-xl origin-center pointer-events-none"
+            >
+                <span className="font-['Anton'] text-3xl tracking-widest uppercase whitespace-nowrap">Available For work</span>
+            </motion.div>
+
+            {/* Available to work Arc - Mobile */}
+            <motion.div
+                initial={{ x: 200, y: 200 }}
+                animate={startAnimation ? { x: 0, y: 0 } : { x: 200, y: 200 }}
+                transition={{ duration: 0.5, delay: 1.5, ease: "easeOut" }}
+                className="md:hidden absolute bottom-0 right-0 z-40 pointer-events-none w-[200px] h-[200px]"
+            >
+                <svg width="100%" height="100%" viewBox="0 0 200 200">
+                    <defs>
+                        <path id="curvePath" d="M 20,200 A 180,180 0 0,1 200,20" />
+                    </defs>
+                    <path
+                        d="M 20,200 A 180,180 0 0,1 200,20"
+                        stroke="#333333"
+                        strokeWidth="40"
+                        fill="none"
+                        className="drop-shadow-xl"
+                    />
+                    <text className="font-['Anton'] text-xl tracking-widest uppercase fill-[#fbf9ef]" dominantBaseline="middle">
+                        <textPath href="#curvePath" startOffset="50%" textAnchor="middle">
+                            Available For work
+                        </textPath>
+                    </text>
+                </svg>
+            </motion.div>
         </div >
     );
 };

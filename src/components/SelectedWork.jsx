@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 
 
@@ -19,8 +19,8 @@ const SelectedWork = () => {
             id: 1,
             title: 'DIGITAL PA',
             year: '2024',
-            tags: ['REACT', 'FRONTEND', 'ANIMATIONS'],
-            image: '/projects/Digital_pa.png',
+            tags: ['REACT', 'TAILWIND CSS', 'FRAMER MOTION'],
+            images: ['/projects/Digital_pa.png', '/projects/Mobile/Digital_pa.png'],
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -31,8 +31,8 @@ const SelectedWork = () => {
             id: 2,
             title: 'LANDING PAGE',
             year: '2024',
-            tags: ['REACT', 'TAILWIND', 'DESIGN'],
-            image: '/projects/Landing_Page.png',
+            tags: ['LENIS', 'CANVAS API', 'VERCEL ANALYTICS'],
+            images: ['/projects/Landing_Page.png', '/projects/Mobile/Landing_Page.png'],
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -43,8 +43,8 @@ const SelectedWork = () => {
             id: 3,
             title: 'STUDY ABROAD',
             year: '2024',
-            tags: ['REACT', 'ANIMATIONS', 'UI/UX'],
-            image: '/projects/Landing_Page1.png',
+            tags: ['WHATSAPP API', 'TAILWIND CSS', 'REACT'],
+            images: ['/projects/Landing_Page1.png', '/projects/Mobile/Landing_Page1.png'],
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -55,8 +55,8 @@ const SelectedWork = () => {
             id: 4,
             title: 'TINY LINK',
             year: '2024',
-            tags: ['REACT', 'API', 'TOOLS'],
-            image: '/projects/Tiny_link.png',
+            tags: ['REACT', 'ROUTES', 'TAILWIND CSS'],
+            images: ['/projects/Tiny_link.png', '/projects/Mobile/Tiny_link.png'],
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -67,8 +67,8 @@ const SelectedWork = () => {
             id: 5,
             title: 'WEATHER NOW',
             year: '2024',
-            tags: ['REACT', 'API', 'WEATHER'],
-            image: '/projects/Weather_Now.png',
+            tags: ['REACT', 'API', 'TAILWIND CSS'],
+            images: ['/projects/Weather_Now.png', '/projects/Mobile/Weather_Now.png'],
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -174,6 +174,7 @@ const SelectedWork = () => {
                             progress={scrollYProgress}
                             range={[index * 0.25, 1]}
                             targetScale={targetScale}
+                            activeIndex={activeIndex}
                         />
                     );
                 })}
@@ -216,11 +217,25 @@ const SelectedWork = () => {
 };
 
 
-const Card = ({ i, project, progress, range, targetScale }) => {
+const Card = ({ i, project, progress, range, targetScale, activeIndex }) => {
+    const containerRef = useRef(null);
+    const isInView = useInView(containerRef, { amount: 0.5 });
     const scale = useTransform(progress, range, [1, targetScale]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    useEffect(() => {
+        // Only play slideshow if the card is the active one (not covered and in view)
+        if (i !== activeIndex) return;
+
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % project.images.length);
+        }, 3000); // Switch every 4 seconds
+
+        return () => clearInterval(interval);
+    }, [i, activeIndex, project.images.length, currentImageIndex]);
 
     return (
-        <div className="h-screen w-full sticky top-0 flex items-center justify-center">
+        <div ref={containerRef} className="h-screen w-full sticky top-0 flex items-center justify-center">
             <motion.div
                 style={{ scale }}
                 className="w-full h-full flex items-center justify-center p-4 pt-32 md:p-6 lg:p-12 relative origin-top"
@@ -236,23 +251,28 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                     <motion.div
                         whileHover={{ scale: 1.01 }}
                         transition={{ duration: 0.3 }}
-                        className="relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-[4/5] lg:aspect-[16/10] group"
+                        className="relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-[4/5] lg:aspect-[16/10] group cursor-pointer"
+                        onClick={() => setCurrentImageIndex((prev) => (prev + 1) % project.images.length)}
                     >
-                        {/* Project Image */}
-                        <motion.div
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.4 }}
-                            className="absolute inset-0 w-full h-full"
-                        >
-                            <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                loading="lazy"
-                            />
+                        {/* Project Image Slideshow */}
+                        <div className="absolute inset-0 w-full h-full bg-black">
+                            <AnimatePresence>
+                                <motion.img
+                                    key={currentImageIndex}
+                                    src={project.images[currentImageIndex]}
+                                    alt={project.title}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0.5 }}
+                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                    loading="lazy"
+                                />
+                            </AnimatePresence>
+
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 transition-all duration-500"></div>
-                        </motion.div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 z-10"></div>
+                        </div>
 
                         {/* Project Info */}
                         <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 md:gap-6 z-20">
@@ -279,7 +299,7 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                                             className="flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 text-white rounded-full text-xs font-semibold shadow-md hover:bg-white/30 transition-all duration-300"
                                         >
                                             <span>View Live</span>
-                                            <ExternalLink className="w-3 h-3" />
+                                            <ExternalLink className="w-3 h-3 text-green-400" />
                                         </motion.a>
                                     ) : (
                                         <motion.span
