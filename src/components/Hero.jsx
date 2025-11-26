@@ -29,15 +29,151 @@ const GlassIcon = ({ Icon, imgSrc, initialX, initialY, delay, color, className, 
     );
 };
 
-const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, startAnimation = true }) => {
+const FakeCursor = ({ startAnimation = true, targetFolder = "left", isAnyFolderOpen = false }) => {
+    const [showCursor, setShowCursor] = useState(false);
+    const [displayText, setDisplayText] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [textIndex, setTextIndex] = useState(0);
+
+    const texts = ["Click Me!", "Drag Me!"];
+
+    useEffect(() => {
+        if (startAnimation) {
+            // Show cursor 1 second after folders appear (folders appear at 1.5s, so 2.5s total)
+            const timer = setTimeout(() => setShowCursor(true), 2500);
+            return () => {
+                clearTimeout(timer);
+            };
+        }
+    }, [startAnimation]);
+
+    // Typewriter effect
+    useEffect(() => {
+        if (!showCursor || isAnyFolderOpen) return;
+
+        const currentText = texts[textIndex];
+        const timeout = setTimeout(() => {
+            if (!isDeleting) {
+                // Typing
+                if (displayText.length < currentText.length) {
+                    setDisplayText(currentText.slice(0, displayText.length + 1));
+                } else {
+                    // Pause before deleting
+                    setTimeout(() => setIsDeleting(true), 2000);
+                }
+            } else {
+                // Deleting
+                if (displayText.length > 0) {
+                    setDisplayText(displayText.slice(0, -1));
+                } else {
+                    // Move to next text
+                    setIsDeleting(false);
+                    setTextIndex((prev) => (prev + 1) % texts.length);
+                }
+            }
+        }, isDeleting ? 50 : 100);
+
+        return () => clearTimeout(timeout);
+    }, [displayText, isDeleting, textIndex, showCursor, isAnyFolderOpen]);
+
+    // Hide cursor when any folder is opened
+    if (!showCursor) return null;
+
+    const isRight = targetFolder === "right";
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 0 }}
+            animate={{
+                opacity: isAnyFolderOpen ? 0 : 1,
+                y: [-5, 5, -5], // Same gentle float as folders
+                scale: [1, 1, 0.9, 1, 1, 1]
+            }}
+            transition={{
+                opacity: { duration: 0.5 },
+                y: {
+                    repeat: Infinity,
+                    duration: 3,
+                    ease: "easeInOut"
+                },
+                scale: {
+                    duration: 1.5,
+                    times: [0, 0.33, 0.5, 0.66, 0.83, 1],
+                    repeat: Infinity,
+                    repeatDelay: 2
+                }
+            }}
+            className={`absolute pointer-events-none z-50 ${isRight
+                ? "bottom-32 right-8 md:bottom-40 md:right-16 lg:bottom-48 lg:right-16"
+                : "bottom-32 left-8 md:bottom-40 md:left-16 lg:bottom-35 lg:left-55"
+                }`}
+            style={{ width: '32px', height: '32px' }}
+        >
+            {/* Cursor SVG - Mirrored for right side */}
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ transform: isRight ? 'scaleX(-1)' : 'none' }}
+            >
+                <path
+                    d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+                    fill="#333333"
+                    stroke="#FFFFFF"
+                    strokeWidth="1"
+                    strokeLinejoin="round"
+                />
+            </svg>
+
+            {/* Click ripple effect */}
+            <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                    scale: [0, 0, 2, 2.5, 0],
+                    opacity: [0, 0, 0.6, 0, 0]
+                }}
+                transition={{
+                    duration: 1.5,
+                    times: [0, 0.33, 0.5, 0.66, 0.83],
+                    repeat: Infinity,
+                    repeatDelay: 2
+                }}
+                className="absolute top-0 left-0 w-8 h-8 rounded-full border-2 border-[#008F96]"
+            />
+
+            {/* "Click me" text - Positioned based on side */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isAnyFolderOpen ? 0 : 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className={`absolute -top-6 ${isRight ? 'right-6' : 'left-6'} bg-[#333333] text-white px-2 py-1 rounded text-xs font-medium whitespace-nowrap shadow-lg`}
+            >
+                {displayText}<span className="animate-pulse">|</span>
+            </motion.div>
+        </motion.div>
+    );
+};
+
+const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, startAnimation = true, onOpenChange }) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    // Notify parent when folder opens/closes
+    const handleToggle = () => {
+        const newState = !isOpen;
+        setIsOpen(newState);
+        if (onOpenChange) {
+            onOpenChange(newState);
+        }
+    };
 
     const variants = {
         hidden: {
             opacity: 0,
             x: zx,
-            y: zy + 50,
-            scale: 0.9,
+            y: zy + 100, // Start from further below
+            scale: 0.8,
             rotate: rotate
         },
         floating: {
@@ -48,7 +184,9 @@ const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, s
             scale: 1,
             transition: {
                 y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-                opacity: { duration: 0.5 }
+                opacity: { duration: 0.6, delay: 1.5 },
+                x: { type: "spring", stiffness: 100, damping: 15, delay: 1.5 },
+                scale: { type: "spring", stiffness: 200, damping: 20, delay: 1.5 }
             }
         },
         open: {
@@ -95,7 +233,7 @@ const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, s
             initial="hidden"
             animate={startAnimation ? (isOpen ? "open" : "floating") : "hidden"}
             variants={variants}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={handleToggle}
             drag
             dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
             whileHover={{ scale: 1.05 }}
@@ -127,6 +265,11 @@ const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, s
 
 const Hero = ({ startAnimation = true }) => {
     const emailLink = `mailto:${EMAIL}?subject=${encodeURIComponent(EMAIL_SUBJECT)}`;
+    const [isAnyFolderOpen, setIsAnyFolderOpen] = useState(false);
+
+    const handleFolderOpenChange = (isOpen) => {
+        setIsAnyFolderOpen(isOpen);
+    };
 
     return (
         <div className="min-h-screen bg-transparent relative text-gray-900 font-sans selection:bg-gray-200 flex flex-col overflow-hidden snap-section">
@@ -148,8 +291,11 @@ const Hero = ({ startAnimation = true }) => {
                 {/* Floating Icons - Glass Folder Layout */}
                 <div className="absolute inset-0 pointer-events-none max-w-[1400px] mx-auto z-0">
 
+                    {/* Fake Cursor Demo - Left Folder */}
+                    <FakeCursor startAnimation={startAnimation} targetFolder="left" isAnyFolderOpen={isAnyFolderOpen} />
+
                     {/* Left Cluster - Web Dev */}
-                    <GlassFolder title="Web Dev" zx={0} zy={0} rotate={6} startAnimation={startAnimation} className="absolute bottom-4 left-4 md:bottom-8 md:left-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
+                    <GlassFolder title="Web Dev" zx={0} zy={0} rotate={6} startAnimation={startAnimation} onOpenChange={handleFolderOpenChange} className="absolute bottom-4 left-4 md:bottom-8 md:left-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
                         {/* Next.js - Left Fan */}
                         <GlassIcon Icon={SiNextdotjs} initialX={0} initialY={0} delay={0.1} color="text-black" className="-rotate-12 z-0 -mr-6 relative" />
                         {/* Node.js - Center Fan */}
@@ -159,7 +305,7 @@ const Hero = ({ startAnimation = true }) => {
                     </GlassFolder>
 
                     {/* Right Cluster - Design */}
-                    <GlassFolder title="Design" zx={0} zy={0} rotate={-6} startAnimation={startAnimation} className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
+                    <GlassFolder title="Design" zx={0} zy={0} rotate={-6} startAnimation={startAnimation} onOpenChange={handleFolderOpenChange} className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-40 h-32 md:w-48 md:h-40 lg:w-56 lg:h-48 z-0 pointer-events-auto">
                         {/* Canva - Left Fan */}
                         <GlassIcon Icon={SiCanva} initialX={0} initialY={0} delay={0.1} color="text-[#00C4CC]" className="-rotate-12 z-0 -mr-6 relative" />
                         {/* Illustrator - Center Fan */}
