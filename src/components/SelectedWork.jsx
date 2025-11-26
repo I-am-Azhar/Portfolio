@@ -20,7 +20,7 @@ const SelectedWork = () => {
             title: 'DIGITAL PA',
             year: '2024',
             tags: ['REACT', 'FRONTEND', 'ANIMATIONS'],
-            image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop',
+            image: '/projects/Digital_pa.png',
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -29,10 +29,22 @@ const SelectedWork = () => {
         },
         {
             id: 2,
-            title: 'VISAS VISION',
+            title: 'LANDING PAGE',
             year: '2024',
-            tags: ['REACT', 'CANVAS API', 'PARALLAX'],
-            image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&h=800&fit=crop',
+            tags: ['REACT', 'TAILWIND', 'DESIGN'],
+            image: '/projects/Landing_Page.png',
+            bgColor: '#f5f1ed',
+            bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
+            bgSize: '20px 100%',
+            liveUrl: 'https://shawaiz-7.vercel.app/',
+            status: 'live'
+        },
+        {
+            id: 3,
+            title: 'STUDY ABROAD',
+            year: '2024',
+            tags: ['REACT', 'ANIMATIONS', 'UI/UX'],
+            image: '/projects/Landing_Page1.png',
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
@@ -40,16 +52,28 @@ const SelectedWork = () => {
             status: 'live'
         },
         {
-            id: 3,
-            title: 'HAND GESTURE MOTOR',
+            id: 4,
+            title: 'TINY LINK',
             year: '2024',
-            tags: ['PYTHON', 'ARDUINO', 'COMPUTER VISION'],
-            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=800&fit=crop',
+            tags: ['REACT', 'API', 'TOOLS'],
+            image: '/projects/Tiny_link.png',
             bgColor: '#f5f1ed',
             bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
             bgSize: '20px 100%',
-            liveUrl: null,
-            status: 'coming-soon'
+            liveUrl: 'https://tinylink-azhar.vercel.app/',
+            status: 'live'
+        },
+        {
+            id: 5,
+            title: 'WEATHER NOW',
+            year: '2024',
+            tags: ['REACT', 'API', 'WEATHER'],
+            image: '/projects/Weather_Now.png',
+            bgColor: '#f5f1ed',
+            bgPattern: 'linear-gradient(to right, rgba(16, 137, 150, 0.15), rgba(16, 137, 150, 0.15) 5px, transparent 5px, transparent)',
+            bgSize: '20px 100%',
+            liveUrl: 'https://weather-now-opal.vercel.app/',
+            status: 'live'
         }
     ];
 
@@ -212,15 +236,13 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                     <motion.div
                         whileHover={{ scale: 1.01 }}
                         transition={{ duration: 0.3 }}
-                        className="bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 md:p-8 relative overflow-hidden"
+                        className="relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-[4/5] lg:aspect-[16/10] group"
                     >
-
-
                         {/* Project Image */}
                         <motion.div
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.4 }}
-                            className="relative rounded-3xl overflow-hidden shadow-md mb-6 md:mb-8 aspect-[4/5] lg:aspect-[16/10] group"
+                            className="absolute inset-0 w-full h-full"
                         >
                             <img
                                 src={project.image}
@@ -228,12 +250,12 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 loading="lazy"
                             />
-                            {/* Gradient Overlay on Hover */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#7b4214]/0 to-[#7b4214]/0 group-hover:from-[#7b4214]/10 group-hover:to-[#7b4214]/10 transition-all duration-500"></div>
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 transition-all duration-500"></div>
                         </motion.div>
 
                         {/* Project Info */}
-                        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 md:gap-6">
+                        <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 md:gap-6 z-20">
                             <div className="flex-1">
                                 <div className="flex items-center gap-4 mb-4">
                                     <motion.h2
@@ -241,7 +263,7 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: 0.3 }}
-                                        className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#333333] leading-tight"
+                                        className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight"
                                     >
                                         {project.title}
                                     </motion.h2>
@@ -254,7 +276,7 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                                             rel="noopener noreferrer"
                                             whileHover={{ scale: 1.05, y: -2 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#7b4214] to-[#7b4214] text-white rounded-full text-xs font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+                                            className="flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 text-white rounded-full text-xs font-semibold shadow-md hover:bg-white/30 transition-all duration-300"
                                         >
                                             <span>View Live</span>
                                             <ExternalLink className="w-3 h-3" />
@@ -263,7 +285,7 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                                         <motion.span
                                             initial={{ opacity: 0, scale: 0.9 }}
                                             animate={{ opacity: 1, scale: 1 }}
-                                            className="px-3 py-1.5 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 text-gray-600 rounded-full text-xs font-semibold"
+                                            className="px-3 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 text-white/80 rounded-full text-xs font-semibold"
                                         >
                                             Coming Soon
                                         </motion.span>
@@ -278,7 +300,7 @@ const Card = ({ i, project, progress, range, targetScale }) => {
                                             viewport={{ once: true }}
                                             transition={{ delay: 0.4 + tagIndex * 0.05 }}
                                             whileHover={{ scale: 1.05, y: -2 }}
-                                            className="px-3 py-2 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md border border-[#333333]/10 hover:bg-white/40 rounded-full text-xs md:text-sm font-medium text-gray-700 transition-all duration-200 cursor-default shadow-sm hover:shadow"
+                                            className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/10 hover:bg-white/20 rounded-full text-xs md:text-sm font-medium text-white/90 transition-all duration-200 cursor-default shadow-sm"
                                         >
                                             {tag}
                                         </motion.span>
