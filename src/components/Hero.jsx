@@ -5,6 +5,7 @@ import { SiNextdotjs, SiReact, SiNodedotjs, SiCanva } from 'react-icons/si';
 import { DiIllustrator, DiPhotoshop } from 'react-icons/di';
 
 const PHONE_NUMBER = '+919908405786';
+const RESUME_PATH = "/Azhar_resume_Dec25.pdf";
 
 const GlassIcon = ({ Icon, imgSrc, initialX, initialY, delay, color, className, startAnimation = true }) => {
     return (
@@ -34,12 +35,12 @@ const FakeCursor = ({ startAnimation = true, targetFolder = "left", isAnyFolderO
     const [isDeleting, setIsDeleting] = useState(false);
     const [textIndex, setTextIndex] = useState(0);
 
-    const texts = ["Click Me!", "Drag Me!"];
+    const texts = ["Click Me", "Drag Me!"];
 
     useEffect(() => {
         if (startAnimation) {
-            // Show cursor 1 second after folders appear (folders appear at 1.5s, so 2.5s total)
-            const timer = setTimeout(() => setShowCursor(true), 2500);
+            // Show cursor 1 second after folders appear (folders appear at 0.5s, so 1.5s total)
+            const timer = setTimeout(() => setShowCursor(true), 1500);
             return () => {
                 clearTimeout(timer);
             };
@@ -183,9 +184,9 @@ const GlassFolder = ({ title, children, className, zx = 0, zy = 0, rotate = 0, s
             scale: 1,
             transition: {
                 y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-                opacity: { duration: 0.6, delay: 1.5 },
-                x: { type: "spring", stiffness: 100, damping: 15, delay: 1.5 },
-                scale: { type: "spring", stiffness: 200, damping: 20, delay: 1.5 }
+                opacity: { duration: 0.6, delay: 0.5 },
+                x: { type: "spring", stiffness: 100, damping: 15, delay: 0.5 },
+                scale: { type: "spring", stiffness: 200, damping: 20, delay: 0.5 }
             }
         },
         open: {
@@ -375,8 +376,8 @@ const Hero = ({ startAnimation = true }) => {
                         Contact Me
                     </motion.a>
                     <motion.a
-                        href="/Azhar_resume_November.pdf"
-                        download="Azhar_Resume.pdf"
+                        href={RESUME_PATH}
+                        download={RESUME_PATH.split('/').pop()}
                         initial={{ opacity: 0, y: 20 }}
                         animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.5, delay: 0.5 }}
@@ -396,7 +397,7 @@ const Hero = ({ startAnimation = true }) => {
             <motion.div
                 initial={{ clipPath: "inset(0 100% 0 0)" }}
                 animate={startAnimation ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
-                transition={{ duration: 2.0, delay: 1.5, ease: "easeInOut" }}
+                transition={{ duration: 2.0, delay: 0.5, ease: "easeInOut" }}
                 className="hidden md:block absolute bottom-[90px] -right-[550px] w-[1500px] bg-[#333333] text-[#fbf9ef] text-center py-5 -rotate-45 z-40 shadow-xl origin-center pointer-events-none"
             >
                 <span className="font-['Anton'] text-3xl tracking-widest uppercase whitespace-nowrap">Available For work</span>
@@ -406,7 +407,7 @@ const Hero = ({ startAnimation = true }) => {
             <motion.div
                 initial={{ x: 200, y: 200 }}
                 animate={startAnimation ? { x: 0, y: 0 } : { x: 200, y: 200 }}
-                transition={{ duration: 0.5, delay: 1.5, ease: "easeOut" }}
+                transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
                 className="md:hidden absolute bottom-0 right-0 z-40 pointer-events-none w-[200px] h-[200px]"
             >
                 <svg width="100%" height="100%" viewBox="0 0 200 200">

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { Analytics } from "@vercel/analytics/react"
 import Hero from './components/Hero'
 import Preloader from './components/Preloader';
 
+import Contact from './components/Contact';
 import MissionServices from './components/MissionServices';
 import SelectedWork from './components/SelectedWork';
 import BackgroundGrid from './components/BackgroundGrid';
@@ -21,7 +23,8 @@ function App() {
       <MissionServices />
 
       <SelectedWork />
-      {/* <Contact /> */}
+      <Contact />
+      <Analytics />
     </div>
   );
 }
