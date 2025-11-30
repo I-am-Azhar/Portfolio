@@ -5,7 +5,7 @@ import { SiNextdotjs, SiReact, SiNodedotjs, SiCanva } from 'react-icons/si';
 import { DiIllustrator, DiPhotoshop } from 'react-icons/di';
 
 const PHONE_NUMBER = '+919908405786';
-const RESUME_PATH = "/Azhar_resume_Dec25.pdf";
+const RESUME_PATH = "/resume.pdf";
 
 const GlassIcon = ({ Icon, imgSrc, initialX, initialY, delay, color, className, startAnimation = true }) => {
     return (
